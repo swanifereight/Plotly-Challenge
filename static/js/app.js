@@ -19,6 +19,29 @@ function buildCharts(sample){
 		var result = resultArr[0];
 		var otu_ids = result.otu_ids;
 		var otu_labels = result.sample_values;
+
+		var bubbleChart = {
+			title: "Bacteria Cultures per Sample",
+			margin: { t:0},
+			hovermode: "closest",
+			xaxis: {title: "OTU ID"},
+			margin: {t:30}
+		};
+
+		var bubbleD = [
+		{
+			x: otu_ids,
+			y: sample_values,
+			text: otu_labels,
+			mode: "markers",
+			marker: {
+				size: sample_values,
+				color: otu_ids,
+				colorscale: "Earth"
+			}
+
+		}
+		];
 		
 	});
 }
