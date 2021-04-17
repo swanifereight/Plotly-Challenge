@@ -1,15 +1,15 @@
 function buildMetadata(sample) {
-	d3.json("samples.json").then((data) => {
+	d3.json("/data/samples.json").then((data) => {
 		var metadata = data.metatdata;
-		var resultArr = metadata.filter(sampleObj.id == sample);
+		var resultArr = metadata.filter(sampleObj=> sampleObj.id == sample);
 		var result = resultArr[0];
 		var PANEL = d3.select("#sample-metadata");
 
 		PANEL.html("");
+
 		Object.entries(result).forEach(([key, value]) => {
 			PANEL.append("h6").text(`${key.toUpperCase()}; ${value}`);
 		});
-		buildGauge(result.wfreq);
 	});
 }
 function buildCharts(sample){
@@ -42,6 +42,26 @@ function buildCharts(sample){
 
 		}
 		];
-		
-	});
+	Plotly.newPlot("bubble", bubbleD, bubbleChart);
+
+    var yticks = otu_ids.slice(0, 10).map(otuID => `OTU ${otuID}`).reverse();
+    var barData = [
+      {
+        y: yticks,
+        x: sample_values.slice(0, 10).reverse(),
+        text: otu_labels.slice(0, 10).reverse(),
+        type: "bar",
+        orientation: "h",
+      }
+    ];
+
+    var barLayout = {
+      title: "Top 10 Bacteria Cultures Found",
+      margin: { t: 30, l: 150 }
+    };
+
+    Plotly.newPlot("bar", barData, barLayout);
+  });
 }
+		
+
