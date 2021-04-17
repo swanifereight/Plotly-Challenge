@@ -11,5 +11,12 @@ function buildMetadata(sample) {
 		});
 		buildGauge(result.wfreq);
 	});
-
+}
+function buildCharts(sample){
+	d3.json("samples.json").then((data) => {
+		var samples = data.samples;
+		var resultArr = samples.filter(sampleObj => sampleObj.id ==sample);
+		var result = resultArr[0];
+		
+	});
 }
