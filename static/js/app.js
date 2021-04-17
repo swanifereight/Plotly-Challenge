@@ -17,6 +17,8 @@ function buildCharts(sample){
 		var samples = data.samples;
 		var resultArr = samples.filter(sampleObj => sampleObj.id ==sample);
 		var result = resultArr[0];
+		var otu_ids = result.otu_ids;
+		var otu_labels = result.sample_values;
 		
 	});
 }
