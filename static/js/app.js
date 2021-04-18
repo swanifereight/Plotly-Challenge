@@ -8,7 +8,7 @@ function buildMetadata(sample) {
 	.data(data)
 	.enter()
 	.append("p")
-	text(function(d) {
+	.text(function(d) {
 		return d.name + "," + d.location;
 	})
 		var metadata = data.metatdata;
