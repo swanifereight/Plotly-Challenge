@@ -1,5 +1,16 @@
 function buildMetadata(sample) {
-	d3.json("data/samples.json").then((data) => {
+	d3.json("data/samples.json", function(error,data){
+		if(error) {
+			return console.warn(error);
+		}
+	d3.select("body")
+	.selectAll("p")
+	.data(data)
+	.enter()
+	.append("p")
+	text(function(d) {
+		return d.name + "," + d.location;
+	})
 		var metadata = data.metatdata;
 		var resultArr = metadata.filter(sampleObj => sampleObj.id == sample);
 		var result = resultArr[0];
@@ -13,7 +24,7 @@ function buildMetadata(sample) {
 	});
 }
 function buildCharts(sample){
-	d3.json("samples.json").then((data) => {
+	d3.json("/data/samples.json").then((data) => {
 		var samples = data.samples;
 		var resultArr = samples.filter(sampleObj => sampleObj.id == sample);
 		var result = resultArr[0];
@@ -68,7 +79,7 @@ function buildCharts(sample){
 function init() {
 
   var selector = d3.select("#selDataset");
-  d3.json("samples.json").then((data) => {
+  d3.json("/data/samples.json").then((data) => {
     var sampleNames = data.names;
 
     sampleNames.forEach((sample) => {
