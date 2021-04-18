@@ -1,7 +1,7 @@
 function buildMetadata(sample) {
-	d3.json("/data/samples.json").then((data) => {
+	d3.json("data/samples.json").then((data) => {
 		var metadata = data.metatdata;
-		var resultArr = metadata.filter(sampleObj=> sampleObj.id == sample);
+		var resultArr = metadata.filter(sampleObj => sampleObj.id == sample);
 		var result = resultArr[0];
 		var PANEL = d3.select("#sample-metadata");
 
@@ -15,10 +15,11 @@ function buildMetadata(sample) {
 function buildCharts(sample){
 	d3.json("samples.json").then((data) => {
 		var samples = data.samples;
-		var resultArr = samples.filter(sampleObj => sampleObj.id ==sample);
+		var resultArr = samples.filter(sampleObj => sampleObj.id == sample);
 		var result = resultArr[0];
 		var otu_ids = result.otu_ids;
-		var otu_labels = result.sample_values;
+		var otu_labels = result.otu_labels;
+		sample_values = result.sample_values;
 
 		var bubbleChart = {
 			title: "Bacteria Cultures per Sample",
@@ -64,4 +65,28 @@ function buildCharts(sample){
   });
 }
 		
+function init() {
 
+  var selector = d3.select("#selDataset");
+  d3.json("samples.json").then((data) => {
+    var sampleNames = data.names;
+
+    sampleNames.forEach((sample) => {
+      selector
+        .append("option")
+        .text(sample)
+        .property("value", sample);
+    });
+
+    var firstSample = sampleNames[0];
+    buildCharts(firstSample);
+    buildMetadata(firstSample);
+  });
+}
+
+function optionChanged(newSample) {
+
+  buildCharts(newSample);
+  buildMetadata(newSample);
+}
+init();
